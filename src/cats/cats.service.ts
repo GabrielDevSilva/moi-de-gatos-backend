@@ -4,14 +4,7 @@ import { Repository, Like } from 'typeorm';
 import { CreateCatDTO } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import { CatEntity } from './entities/cat.entity';
-
-interface IParams {
-  take: number;
-  skip: number;
-}
-interface IParamsName extends IParams {
-  name: string;
-}
+import { IParams, IParamsName } from './cats.interface';
 
 @Injectable()
 export class CatsService {
@@ -49,10 +42,11 @@ export class CatsService {
       skip,
     };
   }
-  async findAll({ take = 20, skip = 0 }: IParams) {
+
+  async findAll({ take = 20, skip = 0, order = 'ASC' }: IParams) {
     const [data, count] = await Promise.all([
       this.catRepository.find({
-        order: { name: 'ASC' },
+        order: { name: order },
         take, // take são a quantidade de itens por página
         skip, // skip é o índice do começo dos itens
       }),
@@ -65,6 +59,7 @@ export class CatsService {
       skip,
     };
   }
+
   async updateCat(id: string, catUpdated: UpdateCatDto) {
     return await this.catRepository.update(id, catUpdated);
   }

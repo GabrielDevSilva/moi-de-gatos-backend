@@ -3,10 +3,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { BreedEntity } from './breed.entity';
 
 @Entity()
 export class CatEntity extends BaseEntity {
@@ -19,8 +20,11 @@ export class CatEntity extends BaseEntity {
   @Column({ nullable: false, type: 'varchar', length: 200 })
   age: number;
 
-  @Column({ nullable: false, type: 'varchar', length: 200 })
-  breed: string;
+  // @Column({ nullable: false, type: 'varchar', length: 200 })
+  // breed: string;
+
+  @ManyToOne((type) => BreedEntity, (cats) => CatEntity, { eager: true })
+  breed: BreedEntity;
 
   @CreateDateColumn()
   createAt: Date;

@@ -7,6 +7,9 @@ export class CreateCatDTO {
   @IsNumber()
   age: number;
 
+  // @IsNotEmpty()
+  // breed: string;
+
   @IsNotEmpty()
-  breed: string;
+  breed: object;
 }

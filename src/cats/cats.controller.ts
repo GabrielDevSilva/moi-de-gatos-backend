@@ -25,16 +25,18 @@ export class CatsController {
     @Param('name') name: string,
     @Query('take') take: number,
     @Query('skip') skip: number,
+    @Query('order') order: string,
   ) {
-    return await this.catService.findByName({ name, take, skip });
+    return await this.catService.findByName({ name, take, skip, order });
   }
 
   @Get()
-  async findAll(@Query('take') take: number, @Query('skip') skip: number) {
-    return await this.catService.findAll({
-      take,
-      skip,
-    });
+  async findAll(
+    @Query('take') take: number,
+    @Query('skip') skip: number,
+    @Query('order') order: string,
+  ) {
+    return await this.catService.findAll({ take, skip, order });
   }
 
   @Put(':id')

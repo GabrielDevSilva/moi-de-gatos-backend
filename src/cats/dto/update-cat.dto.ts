@@ -13,8 +13,8 @@ export class UpdateCatDto {
   @IsNumber()
   age: number;
 
-  @IsOptional()
-  @IsNotEmpty()
-  @IsString()
-  breed: string;
+  // @IsOptional()
+  // @IsNotEmpty()
+  // @IsString()
+  // breed: string;
 }
