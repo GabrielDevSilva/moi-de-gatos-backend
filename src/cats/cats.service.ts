@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Like } from 'typeorm';
+import { Repository, Like, ILike } from 'typeorm';
 import { CreateCatDTO } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import { CatEntity } from './entities/cat.entity';
-import { IParams, IParamsName } from './cats.interface';
+import { IParams, IParamsName } from '@Types';
 
 @Injectable()
 export class CatsService {
@@ -26,12 +26,12 @@ export class CatsService {
         take,
         skip,
         where: {
-          name: Like(`%${name}%`),
+          name: ILike(`%${name}%`),
         },
       }),
       this.catRepository.count({
         where: {
-          name: Like(`%${name}%`),
+          name: ILike(`%${name}%`),
         },
       }),
     ]);

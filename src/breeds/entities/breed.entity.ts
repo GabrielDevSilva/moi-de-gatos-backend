@@ -5,7 +5,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CatEntity } from './cat.entity';
+import { CatEntity } from '../../cats/entities/cat.entity';
 
 @Entity()
 export class BreedEntity extends BaseEntity {

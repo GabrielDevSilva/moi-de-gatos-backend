@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { BreedEntity } from './breed.entity';
+import { BreedEntity } from '../../breeds/entities/breed.entity';
 
 @Entity()
 export class CatEntity extends BaseEntity {

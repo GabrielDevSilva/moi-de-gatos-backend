@@ -1,18 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { ILike, Like, Repository } from 'typeorm';
 import { CreateBreedDTO } from './dto/create-breed.dto';
 import { UpdateBreedDto } from './dto/update-breed.dto';
 import { BreedEntity } from './entities/breed.entity';
-
-interface IParams {
-  take: number;
-  skip: number;
-  order;
-}
-interface IParamsBreed extends IParams {
-  name: string;
-}
+import { IParamsBreed } from '@Types';
 
 @Injectable()
 export class BreedsService {
@@ -37,12 +29,12 @@ export class BreedsService {
     }
   }
 
-  async findBreed<IParamsBreed>({ breed, order }) {
+  async findBreed({ breed, order }: IParamsBreed) {
     try {
       return this.breedsRepository.find({
         order: { breed: 'ASC' },
         where: {
-          breed: Like(`%${breed}%`),
+          breed: ILike(`${breed}%`),
         },
       });
     } catch (error) {

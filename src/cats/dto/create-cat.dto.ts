@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNotEmptyObject, IsNumber } from 'class-validator';
 
 export class CreateCatDTO {
   @IsNotEmpty()
@@ -7,9 +7,7 @@ export class CreateCatDTO {
   @IsNumber()
   age: number;
 
-  // @IsNotEmpty()
-  // breed: string;
-
   @IsNotEmpty()
+  @IsNotEmptyObject()
   breed: object;
 }

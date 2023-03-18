@@ -13,3 +13,8 @@ export interface IParams {
 export interface IParamsName extends IParams {
   name: string;
 }
+
+export interface IParamsBreed {
+  breed: string;
+  order;
+}
