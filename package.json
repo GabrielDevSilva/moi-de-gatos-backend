@@ -17,7 +17,18 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "pretest:e2e":"cross-env ENV=test npm run clear:db:test && cross-env ENV=test npm run migration:up",
+    "test:e2e": "cross-env ENV=test jest --config ./test/jest-e2e.json",
+    "posttest:e2e":"cross-env ENV=test npm run clear:db:test",
+    "typeorm:ts": "typeorm-ts-node-esm",
+    "clear:db:test": "npm run typeorm:ts schema:drop -- -d ./typeorm/data-source.ts",
+    "migration:create": "npm run typeorm:ts migration:create",
+    "migration:up": "npm run typeorm:ts migration:run -- -d ./typeorm/data-source.ts",
+    "migration:down": "npm run typeorm:ts migration:revert -- -d ./typeorm/data-source.ts",
+    "single-clear:db:test": "cross-env ENV=test npm run typeorm:ts schema:drop -- -d ./typeorm/data-source.ts",
+    "single-test:e2e": "cross-env ENV=test jest --config ./test/jest-e2e.json",
+    "single-migration:up": "cross-env ENV=test npm run typeorm:ts migration:run -- -d ./typeorm/data-source.ts",
+    "single-migration:down": "cross-env ENV=test npm run typeorm:ts migration:revert -- -d ./typeorm/data-source.ts"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

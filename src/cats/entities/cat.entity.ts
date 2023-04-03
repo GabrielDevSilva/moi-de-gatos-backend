@@ -9,15 +9,15 @@ import {
 } from 'typeorm';
 import { BreedEntity } from '../../breeds/entities/breed.entity';
 
-@Entity()
+@Entity('cats')
 export class CatEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ nullable: false, type: 'varchar', length: 200 })
+  @Column()
   name: string;
 
-  @Column({ nullable: false, type: 'varchar', length: 200 })
+  @Column()
   age: number;
 
   // @Column({ nullable: false, type: 'varchar', length: 200 })

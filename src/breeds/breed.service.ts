@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, Like, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CreateBreedDTO } from './dto/create-breed.dto';
 import { UpdateBreedDto } from './dto/update-breed.dto';
 import { BreedEntity } from './entities/breed.entity';
@@ -13,56 +13,42 @@ export class BreedsService {
     private breedsRepository: Repository<BreedEntity>,
   ) {}
 
-  async createBreed(breed: CreateBreedDTO) {
-    try {
-      return await this.breedsRepository.save(breed);
-    } catch (error) {
-      console.log((error as Error).message);
+  async createBreed(createBreedDTO: CreateBreedDTO) {
+    if (
+      await this.breedsRepository.exist({
+        where: {
+          breed: createBreedDTO.breed,
+        },
+      })
+    ) {
+      throw new BadRequestException('Esta raça já esta cadastrada.');
     }
+
+    return await this.breedsRepository.save(createBreedDTO);
   }
 
   async findOneBreedById(id: string) {
-    try {
-      return await this.breedsRepository.findOneBy({ id });
-    } catch (error) {
-      console.log((error as Error).message);
-    }
+    return await this.breedsRepository.findOneBy({ id });
   }
 
   async findBreed({ breed, order }: IParamsBreed) {
-    try {
-      return this.breedsRepository.find({
-        order: { breed: 'ASC' },
-        where: {
-          breed: ILike(`${breed}%`),
-        },
-      });
-    } catch (error) {
-      console.log((error as Error).message);
-    }
+    return this.breedsRepository.find({
+      order: { breed: 'ASC' },
+      where: {
+        breed: ILike(`${breed}%`),
+      },
+    });
   }
 
   async findAllBreed() {
-    try {
-      return await this.breedsRepository.find();
-    } catch (error) {
-      console.log((error as Error).message);
-    }
+    return await this.breedsRepository.find();
   }
 
   async updateBreed(id: string, breedUpdated: UpdateBreedDto) {
-    try {
-      return await this.breedsRepository.update(id, breedUpdated);
-    } catch (error) {
-      console.log((error as Error).message);
-    }
+    return await this.breedsRepository.update(id, breedUpdated);
   }
 
   async deleteBreed(id: string) {
-    try {
-      return await this.breedsRepository.delete(id);
-    } catch (error) {
-      console.log((error as Error).message);
-    }
+    return await this.breedsRepository.delete(id);
   }
 }

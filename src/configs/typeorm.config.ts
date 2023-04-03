@@ -1,7 +1,9 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
+import { BreedEntity } from '../breeds/entities/breed.entity';
+import { CatEntity } from '../cats/entities/cat.entity';
 dotenv.config({
-  // path: __dirname+"../../.env"
+  path: process.env.ENV === 'test' ? '.env.test' : '.env',
 });
 
 export const TypeOrmConfig: TypeOrmModuleOptions = {
@@ -12,6 +14,7 @@ export const TypeOrmConfig: TypeOrmModuleOptions = {
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DATABASE,
   autoLoadEntities: true,
-  entities: ['dist/domain/**/*.entity{.ts,.js}'],
-  synchronize: true,
+  // entities: [CatEntity, BreedEntity],
+  // entities: ['../**/entities/*.entity.ts'],
+  synchronize: process.env.ENV === 'development',
 };

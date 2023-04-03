@@ -3,13 +3,13 @@ import {
   Delete,
   Put,
 } from '@nestjs/common/decorators/http/request-mapping.decorator';
-import { CatsService } from './cats.service';
+import { CatService } from './cat.service';
 import { CreateCatDTO } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 
 @Controller('cats')
-export class CatsController {
-  constructor(private catService: CatsService) {}
+export class CatController {
+  constructor(private catService: CatService) {}
 
   @Post()
   async createCat(@Body() createCatDTO: CreateCatDTO) {

@@ -9,11 +9,10 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    // "baseUrl": "./",
-    "baseUrl": "src",
+    "baseUrl": "./",
     "paths": {
-      "@Types": ["../types/index.ts"],
-      "@Types/*": ["../types/*"]
+      "@Types": ["./types/index.ts"],
+      "@Types/*": ["./types/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

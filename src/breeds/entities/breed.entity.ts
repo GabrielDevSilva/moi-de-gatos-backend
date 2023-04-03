@@ -4,15 +4,17 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 import { CatEntity } from '../../cats/entities/cat.entity';
 
-@Entity()
+@Unique(['breed'])
+@Entity('breeds')
 export class BreedEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ nullable: false, type: 'varchar', length: 200 })
+  @Column()
   breed: string;
 
   @OneToMany((type) => CatEntity, (breed) => BreedEntity)
